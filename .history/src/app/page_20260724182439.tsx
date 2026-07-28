@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { api } from "../lib/trpc"
-// import { api } from "./lib/trpc"
+import { api } from "@/lib/trpc"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

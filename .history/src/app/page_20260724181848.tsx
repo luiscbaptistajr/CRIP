@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { api } from "../lib/trpc"
-// import { api } from "./lib/trpc"
+import { api } from "@/lib/trpc"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -96,28 +95,28 @@ function SearchBar({
 
 // ─── Status badge ─────────────────────────────────────────────────────────────
 
-// function Badge({ value }: { value: string }) {
-//   const colors: Record<string, string> = {
-//     active:      "bg-green-50 text-green-700",
-//     prospect:    "bg-blue-50 text-blue-700",
-//     lead:        "bg-yellow-50 text-yellow-700",
-//     churned:     "bg-red-50 text-red-700",
-//     won:         "bg-green-50 text-green-700",
-//     lost:        "bg-red-50 text-red-700",
-//     proposal:    "bg-purple-50 text-purple-700",
-//     negotiation: "bg-orange-50 text-orange-700",
-//     qualified:   "bg-blue-50 text-blue-700",
-//     admin:       "bg-gray-900 text-white",
-//     manager:     "bg-gray-700 text-white",
-//     rep:         "bg-gray-100 text-gray-700",
-//   }
+function Badge({ value }: { value: string }) {
+  const colors: Record<string, string> = {
+    active:      "bg-green-50 text-green-700",
+    prospect:    "bg-blue-50 text-blue-700",
+    lead:        "bg-yellow-50 text-yellow-700",
+    churned:     "bg-red-50 text-red-700",
+    won:         "bg-green-50 text-green-700",
+    lost:        "bg-red-50 text-red-700",
+    proposal:    "bg-purple-50 text-purple-700",
+    negotiation: "bg-orange-50 text-orange-700",
+    qualified:   "bg-blue-50 text-blue-700",
+    admin:       "bg-gray-900 text-white",
+    manager:     "bg-gray-700 text-white",
+    rep:         "bg-gray-100 text-gray-700",
+  }
 
-//   return (
-//     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium capitalize ${colors[value] ?? "bg-gray-100 text-gray-600"}`}>
-//       {value}
-//     </span>
-//   )
-// }
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium capitalize ${colors[value] ?? "bg-gray-100 text-gray-600"}`}>
+      {value}
+    </span>
+  )
+}
 
 // ─── Companies table ──────────────────────────────────────────────────────────
 
@@ -456,9 +455,9 @@ export default function DataPage() {
 
         {/* Table panels */}
         {activeTab === "companies" && <CompaniesTable />}
-        {/* {activeTab === "contacts"  && <ContactsTable />}
+        {activeTab === "contacts"  && <ContactsTable />}
         {activeTab === "deals"     && <DealsTable />}
-        {activeTab === "users"     && <UsersTable />} */}
+        {activeTab === "users"     && <UsersTable />}
       </div>
     </div>
   )
