@@ -128,29 +128,34 @@ export const activityTypeEnum = pgEnum("activity_type", [
 // ─── Companies ────────────────────────────────────────────────────────────────
 
 export const companies = pgTable("companies", {
-  id:       uuid("id").primaryKey().defaultRandom(),
+  id:         uuid("id").primaryKey().defaultRandom(),
   // tenantId: uuid("tenant_id").notNull().references(() => tenants.id, { onDelete: "cascade" }),
-  name:     text("name").notNull(),
-  industry: text("industry"),           // Organization Type
-  address:  text("address"),
-  city:     text("city"),
-  country:  text("country"),
-  scope:    text("scope"),              // "1-10", "11-50", "51-200", etc.
-  size:     text("size"),               // "1-10", "11-50", "51-200", etc.
-  notes:    text("notes"),
-  website:  text("website"),
-  email:    text("email"),
-  phone:    text("number"),
-  linkedIn: text("linkedIn"),
-  facebook: text("facebook"),
-  instagram:text("instagram"),
-  domain:   text("domain"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  name:           text("name").notNull(),     // Agency name
+  industry:       text("industry"),           // Organization Type
+  address:        text("address"),
+  city:           text("city"),
+  country:        text("country"),
+  region:         text('region'),
+  scope:          text("scope"),              // "1-10", "11-50", "51-200", etc.
+  size:           text("size"),               // "1-10", "11-50", "51-200", etc.
+  notes:          text("notes"),
+  website:        text("website"),
+  email:          text("email"),
+  phone:          text("number"),
+  linkedIn:       text("linkedIn"),
+  facebook:       text("facebook"),
+  instagram:      text("instagram"),
+  domain:         text("domain"),
+  dateJoined:     text("date_joined"),
+  status:         text("status"),
+  updateTitle:    text("update_title"),
+  primaryContact: text("primary_contact"),
+  createdAt:      timestamp("created_at").defaultNow().notNull(),
+  updatedAt:      timestamp("updated_at").defaultNow().notNull(),
 }, (t) => ({
   // tenantIdx:  index("companies_tenant_idx").on(t.tenantId),
-  companyIdx: index("id").on(t.id),
-  domainIdx:  index("companies_domain_idx").on(t.domain),
+  companyIdx:     index("id").on(t.id),
+  domainIdx:      index("companies_domain_idx").on(t.domain),
 }))
 
 // ─── Contacts ─────────────────────────────────────────────────────────────────

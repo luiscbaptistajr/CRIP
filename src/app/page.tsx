@@ -6,7 +6,7 @@ import { api } from "../lib/trpc"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Tab = "companies" | "contacts" | "deals" | "users"
+type Tab = "agencies" | "contacts" | "deals" | "users"
 
 // ─── Pagination component ─────────────────────────────────────────────────────
 
@@ -94,6 +94,14 @@ function SearchBar({
   )
 }
 
+// ─── Form - call to action button ───────────────────────────────────────────────────────────────
+
+function AddLogsBtn() {
+  return(
+    <a href="#">Add Logs Button Here</a>
+  )
+}
+
 // ─── Status badge ─────────────────────────────────────────────────────────────
 
 // function Badge({ value }: { value: string }) {
@@ -135,8 +143,16 @@ function CompaniesTable() {
       <div className="border border-gray-100 rounded-xl overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 border-b border-gray-100">
-            <tr>
-              {["Name", "Domain", "Industry", "Size", "City", "Country", "Created"].map(h => (
+            {/* <tr>
+              {["Agencies", "Domain", "Industry", "Size", "City", "Country", "Created"].map(h => (
+                <th key={h} className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {h}
+                </th>
+              ))}
+            </tr> */}
+
+             <tr>
+              {["Agencies", "Region", "Primary Contact", "Status", "Last Active"].map(h => (
                 <th key={h} className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   {h}
                 </th>
@@ -161,8 +177,9 @@ function CompaniesTable() {
                 </td>
               </tr>
             ) : data?.data.map(c => (
+              // {["Agencies", "Region", "Primary Contact", "Status", "Last Active"]
               <tr key={c.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-4 py-3 font-medium text-gray-900">{c.name}</td>
+                {/* <td className="px-4 py-3 font-medium text-gray-900">{c.name}</td>
                 <td className="px-4 py-3 text-gray-500">{c.domain ?? "—"}</td>
                 <td className="px-4 py-3 text-gray-500 capitalize">{c.industry ?? "—"}</td>
                 <td className="px-4 py-3 text-gray-500">{c.size ?? "—"}</td>
@@ -170,6 +187,14 @@ function CompaniesTable() {
                 <td className="px-4 py-3 text-gray-500">{c.country ?? "—"}</td>
                 <td className="px-4 py-3 text-gray-400 text-xs">
                   {c.createdAt ? new Date(c.createdAt).toLocaleDateString() : "—"}
+                </td> */}
+
+                <td className="px-4 py-3 font-medium text-gray-900">{c.name}</td>
+                <td className="px-4 py-3 text-gray-500">{c.region ?? "—"}</td>
+                <td className="px-4 py-3 text-gray-500 capitalize">{c.primaryContact ?? "—"}</td>
+                <td className="px-4 py-3 text-gray-500">{c.status ?? "—"}</td>
+                <td className="px-4 py-3 text-gray-400 text-xs">
+                  {c.updatedAt} {c.updateTitle}
                 </td>
               </tr>
             ))}
@@ -181,6 +206,14 @@ function CompaniesTable() {
         <p className="text-xs text-gray-400">{data.total} companies total</p>
       )}
     </div>
+  )
+}
+
+
+
+function RenewalCall() {
+  return(
+    <div>Form Here</div>
   )
 }
 
@@ -415,10 +448,10 @@ function CompaniesTable() {
 // ─── Main page ────────────────────────────────────────────────────────────────
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: "companies", label: "Companies", icon: "🏢" },
-  { id: "contacts",  label: "Contacts",  icon: "👤" },
-  { id: "deals",     label: "Deals",     icon: "💼" },
-  { id: "users",     label: "Users",     icon: "👥" },
+  { id: "agencies", label: "Agencies", icon: "🏢" }, // Companies
+  { id: "contacts",  label: "Contacts", icon: "👤" },
+  { id: "deals",     label: "Deals",    icon: "💼" },
+  { id: "users",     label: "Users",    icon: "👥" },
 ]
 
 export default function DataPage() {
@@ -426,15 +459,32 @@ export default function DataPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-6 py-10">
-
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-gray-900">Data</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Browse and search across all your CRM records
+      <div>
+        <h1>Family Resource Program</h1>
+        <div>
+          <a href="">Dashboard</a>
+          <a href="">Agencies</a>
+        </div>
+        <div>
+          <p>
+            <a href=""><AddLogsBtn /></a>
+            <a href="">Notification Bell Placeholder</a>
+            <a href="">Setting Placeholder</a>
           </p>
         </div>
+        
+
+      </div>
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-semibold text-gray-900">Agencies</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Manage and browse all agencies.
+          </p>
+        </div>
+
+        
 
         {/* Tabs */}
         <div className="flex gap-1 p-1 bg-gray-100 rounded-xl w-fit mb-8">
@@ -453,12 +503,15 @@ export default function DataPage() {
             </button>
           ))}
         </div>
+        
 
         {/* Table panels */}
-        {activeTab === "companies" && <CompaniesTable />}
+        {activeTab === "agencies" && <CompaniesTable />}
         {/* {activeTab === "contacts"  && <ContactsTable />}
         {activeTab === "deals"     && <DealsTable />}
         {activeTab === "users"     && <UsersTable />} */}
+
+        <RenewalCall />
       </div>
     </div>
   )
