@@ -127,7 +127,7 @@ export const activityTypeEnum = pgEnum("activity_type", [
 
 // ─── Companies ────────────────────────────────────────────────────────────────
 
-export const companies = pgTable("companies", {
+export const agencies = pgTable("companies", {
   id:         uuid("id").primaryKey().defaultRandom(),
   // tenantId: uuid("tenant_id").notNull().references(() => tenants.id, { onDelete: "cascade" }),
   name:           text("name").notNull(),     // Agency name
@@ -351,8 +351,8 @@ export const companies = pgTable("companies", {
 // export type User    = typeof users.$inferSelect
 // export type NewUser = typeof users.$inferInsert
 
-export type Company    = typeof companies.$inferSelect
-export type NewCompany = typeof companies.$inferInsert
+export type Agency    = typeof agencies.$inferSelect
+export type NewAgency = typeof agencies.$inferInsert
 
 // export type Contact    = typeof contacts.$inferSelect
 // export type NewContact = typeof contacts.$inferInsert

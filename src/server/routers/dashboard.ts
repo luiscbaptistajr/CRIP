@@ -2,7 +2,7 @@ import { z } from "zod"
 import { router, authedProcedure } from "../trpc"
 import { db } from "../db"
 // import { companies, contacts, deals, users } from "../db/schema"
-import { companies} from "../db/schema"
+import { agencies } from "../db/schema"
 import { eq, desc, count, ilike, or } from "drizzle-orm"
 
 const paginationInput = z.object({
@@ -14,7 +14,7 @@ const paginationInput = z.object({
 export const dashboardRouter = router({
 
   // ── Companies ──────────────────────────────────────────────────────────────
-  getCompanies: authedProcedure
+  getAgencies: authedProcedure
     .input(paginationInput)
     .query(async ({ ctx, input }) => {
       const { page, limit, search } = input
@@ -24,19 +24,21 @@ export const dashboardRouter = router({
 
       const where = search
         ? or(
-            ilike(companies.name,   `%${search}%`),
-            ilike(companies.domain, `%${search}%`),
-            ilike(companies.city,   `%${search}%`),
+            ilike(agencies.name, `%${search}%`),
+            ilike(agencies.region, `%${search}%`),
+            ilike(agencies.primaryContact, `%${search}%`),
+            ilike(agencies.status, `%${search}%`),
+            ilike(agencies.updateTitle, `%${search}%`),
           )
         : undefined
 
       const [rows, [{ total }]] = await Promise.all([
-        db.select().from(companies)
+        db.select().from(agencies)
           .where(where)
-          .orderBy(desc(companies.createdAt))
+          .orderBy(desc(agencies.createdAt))
           .limit(limit)
           .offset(offset),
-        db.select({ total: count() }).from(companies).where(where),
+        db.select({ total: count() }).from(agencies).where(where),
       ])
 
       return {
