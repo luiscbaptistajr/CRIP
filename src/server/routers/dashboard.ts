@@ -2,7 +2,7 @@ import { z } from "zod"
 import { router, authedProcedure } from "../trpc"
 import { db } from "../db"
 // import { companies, contacts, deals, users } from "../db/schema"
-import { agencies } from "../db/schema"
+import { agencies } from "@/server/db/schema"
 import { eq, desc, count, ilike, or } from "drizzle-orm"
 
 const paginationInput = z.object({
@@ -49,6 +49,7 @@ export const dashboardRouter = router({
         totalPages: Math.ceil(Number(total) / limit),
       }
     })
+ 
 
   // ── Contacts ───────────────────────────────────────────────────────────────
 //   getContacts: authedProcedure

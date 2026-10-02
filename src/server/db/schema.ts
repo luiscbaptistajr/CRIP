@@ -3,11 +3,11 @@ import {
   pgEnum,
   text,
   uuid,
-  // numeric,
-  // integer,
-  // boolean,
+  numeric,
+  integer,
+  boolean,
   timestamp,
-  // uniqueIndex,
+  uniqueIndex,
   index,
 } from "drizzle-orm/pg-core"
 
@@ -137,7 +137,7 @@ export const agencies = pgTable("companies", {
   country:        text("country"),
   region:         text('region'),
   scope:          text("scope"),              // "1-10", "11-50", "51-200", etc.
-  size:           text("size"),               // "1-10", "11-50", "51-200", etc.
+  size:           text("size"),               // to be remove
   notes:          text("notes"),
   website:        text("website"),
   email:          text("email"),
@@ -157,6 +157,81 @@ export const agencies = pgTable("companies", {
   companyIdx:     index("id").on(t.id),
   domainIdx:      index("companies_domain_idx").on(t.domain),
 }))
+
+// ─── Renewal Call ─────────────────────────────────────────────────────────────
+export const renewalCall = pgTable("renewalCall", {
+  callId:     uuid("callId").primaryKey().defaultRandom(),
+  agencyId:   uuid("id").references(() => agencies.id),
+  spokeWith:  text("spoke_with"),
+  lastUpdate: text("last_update"),
+  createdAt:  timestamp("created_at").defaultNow().notNull(),
+  updatedAt:  timestamp("updated_at").defaultNow().notNull(),
+
+  // Family Trends
+  familyTrends: text("family_trends"),
+
+  // Key Funders
+  keyFunders: text("family_trends"),
+
+  // Impact
+  totalVisits:              numeric("total_visits"),
+  totalVisitsNote:          text("total_visits_note"),
+  uniqueFamilies:           numeric("unique_families"),
+  uniqueFamiliesNote:       text("unique_families_note"),
+  staffVolunteers:          numeric("staff_volunteers"),
+  staffVolunteersNote:      text("staff_volunteers_note"),
+  weeklyStaffHours:         numeric("weekly_staff_hours"),
+  weeklyStaffNote:          text("weekly_staff_hours_note"),
+  relevantPartners:         numeric("relevant_partners"),
+  relevantPartnersNote:     text("relevant_partners_note"),
+  referralsMade:            numeric("referrals_made"),
+  referralsMadeNote:        text("referrals_made_note"),
+  foodSecurityMetrics:      numeric("food_security_metrics"),
+  foodSecurityMetricsNote:  text("food_security_metrics_note"),
+  additionalMetrics:        numeric("additional_metrics"),
+  additionalMetricsNote:    text("additional_metrics_note"),
+
+  // Evaluation Practice
+  evaluationPractice: text("evaluation_practice"),
+
+  // Member Experience
+  topSuccesses:   text("top_successes"),
+  topChallenges:  text("top_challenges"),
+
+  // FRP-BC Services Matrix
+  // servicesMatrix: text("services_matrix"),
+
+  // Offers & Wrap-up
+  subscriptionPermission: boolean("is_subscribed").default(true).notNull(),
+  opportunitiesShared:    text("opportunities_shared"),
+  followUpAction:         text("follow_up_action"),
+})
+
+// ─── Contacts ─────────────────────────────────────────────────────────────────
+
+// export const staffMembers = pgTable("members", {
+//   memberId: uuid("memberId").primaryKey.defaultRandom(),
+//   agencyId: uuid("id").references(() => agencies.id),
+//   memberName: text("member_name"),
+//   memberRole: text("member_role"),
+//   primary: boolean("is_primary").default(true).notNull(),
+// })
+
+// export const renewalCall = pgTable("renewalCall", {
+//   callId:     uuid("callId").primaryKey.defaultRandom(),
+//   agencyId:   uuid("id").references(() => agencies.id),
+//   spokeWith:  text("spoke_with"),
+//   lastUpdate: text("last_update"),
+//   createdAt:  timestamp("created_at").defaultNow().notNull(),
+//   updatedAt:  timestamp("updated_at").defaultNow().notNull(),
+// })
+
+// export const programServices = pgTable("program")
+
+// programId PK int
+// agencyId int FK >- agencies.agencyId
+// programList string
+
 
 // ─── Contacts ─────────────────────────────────────────────────────────────────
 
@@ -353,6 +428,9 @@ export const agencies = pgTable("companies", {
 
 export type Agency    = typeof agencies.$inferSelect
 export type NewAgency = typeof agencies.$inferInsert
+
+export type RenewalCall = typeof renewalCall.$inferSelect
+export type NewRenewalCall = typeof renewalCall.$inferInsert
 
 // export type Contact    = typeof contacts.$inferSelect
 // export type NewContact = typeof contacts.$inferInsert
